@@ -1,7 +1,12 @@
-//window.onload = function() {
+/**
+ *
+ * @param id
+ * @returns {Element}
+ */
 function getid(id) {
  return document.getElementById(id) ;
 }
+//window加载事件
 window.addEventListener('load', function load(event) {
 	
  var oBox = getid("table_whole"); 
@@ -9,7 +14,6 @@ window.addEventListener('load', function load(event) {
  var oTop1 = getid("content_area");
  var oBottom = getid("side_code_parent");
  var oLine = getid("mid_td");
- 
 
  oLine.onmousedown = function(e) {
  	var disX = (e || event).clientX;

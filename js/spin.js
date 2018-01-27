@@ -33,7 +33,7 @@
   }
 
   /**
-   * Appends children and returns the parent.
+   * 添加子元素并返回父类。
    */
   function ins(parent /* child1, child2, ...*/) {
     for (var i=1, n=arguments.length; i<n; i++)
@@ -43,7 +43,7 @@
   }
 
   /**
-   * Insert a new stylesheet to hold the @keyframe or VML rules.
+   * 插入一个新的样式表来保存@keyframe或VML规则。
    */
   var sheet = (function() {
     var el = createEl('style', {type : 'text/css'})
@@ -52,7 +52,7 @@
   }())
 
   /**
-   * Creates an opacity keyframe animation rule and returns its name.
+   * 创建一个不透明关键帧动画规则并返回它的名字。
    * Since most mobile Webkits have timing issues with animation-delay,
    * we create separate rules for each line/segment.
    */
@@ -80,7 +80,7 @@
   }
 
   /**
-   * Tries various vendor prefixes and returns the first supported property.
+   * 尝试不同的前缀,并返回第一个支持的属性。
    */
   function vendor(el, prop) {
     var s = el.style
@@ -96,7 +96,7 @@
   }
 
   /**
-   * Sets multiple style properties at once.
+   * 设置多个样式属性。
    */
   function css(el, prop) {
     for (var n in prop)
@@ -106,7 +106,7 @@
   }
 
   /**
-   * Fills in default values.
+   * 填写默认值。
    */
   function merge(obj) {
     for (var i=1; i < arguments.length; i++) {
@@ -118,14 +118,13 @@
   }
 
   /**
-   * Returns the line color from the given string or array.
+   * 返回线的颜色从给定的字符串或数组。
    */
   function getColor(color, idx) {
     return typeof color == 'string' ? color : color[idx % color.length]
   }
 
-  // Built-in defaults
-
+  //内置的默认值
   var defaults = {
     lines: 12,            // The number of lines to draw
     length: 7,            // The length of each line
@@ -144,9 +143,9 @@
     top: '50%',           // center vertically
     left: '50%',          // center horizontally
     position: 'absolute'  // element position
-  }
+  };
 
-  /** The constructor */
+  /** 构造函数 */
   function Spinner(o) {
     this.opts = merge(o || {}, Spinner.defaults, defaults)
   }

@@ -1,149 +1,7 @@
-
-
-// //创建命名空间
-// var Ccbits = {};
-// /**
-//  *
-//  * @type {{zh-hans: string, zh-hant: string, en: string, spa: string}}
-//  */
-// Ccbits.LANGUAGE_NAME = {
-//     'zh-hans': '简体中文',
-//     'zh-hant': '繁體中文',
-//     'en': 'English',
-//     'spa': 'Español',
-//
-// };
-// /**
-//  *
-//  * @type {string}
-//  */
-// Ccbits.LANG = Code.getLang();
-// /**
-//  *
-//  * @type {[string,string,string,string]}
-//  */
-// Ccbits.LANGUAGE_RTL = ['ar', 'fa', 'he', 'lki'];
-// /**
-//  *
-//  * @param name
-//  * @param defaultValue
-//  * @returns {string}
-//  */
-// Ccbits.getStringParamFromUrl = function (name, defaultValue) {
-//     var val = location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
-//     return val ? decodeURIComponent(val[1].replace(/\+/g, '%20')) : defaultValue;
-// };
-// /**
-//  *
-//  * @returns {string}
-//  */
-// Ccbits.getLang = function () {
-//     var lang = Code.getStringParamFromUrl('lang', '');
-//     if (Code.LANGUAGE_NAME[lang] === undefined) {
-//         // Default to zh-hans.
-//         lang = 'zh-hans';
-//     }
-//     return lang;
-// };
-// /**
-//  *
-//  * @returns {boolean}
-//  */
-// Ccbits.isRtl = function () {
-//     return Ccbits.LANGUAGE_RTL.indexOf(Code.LANG) != -1;
-// };
-// /**
-//  *
-//  */
-// Ccbits.changeLanguage = function () {
-//     // Store the blocks for the duration of the reload.
-//     // This should be skipped for the index page, which has no blocks and does
-//     // not load Blockly.
-//     // MSIE 11 does not support sessionStorage on file:// URLs.
-//     if (typeof Blockly != 'undefined' && window.sessionStorage) {
-//         var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-//         var text = Blockly.Xml.domToText(xml);
-//         window.sessionStorage.loadOnceBlocks = text;
-//     }
-//
-//     var languageMenu = document.getElementById('languageMenu');
-//     var newLang = encodeURIComponent(
-//         languageMenu.options[languageMenu.selectedIndex].value);
-//     var search = window.location.search;
-//     if (search.length <= 1) {
-//         search = '?lang=' + newLang;
-//     } else if (search.match(/[?&]lang=[^&]*/)) {
-//         search = search.replace(/([?&]lang=)[^&]*/, '$1' + newLang);
-//     } else {
-//         search = search.replace(/\?/, '?lang=' + newLang + '&');
-//     }
-//
-//     window.location = window.location.protocol + '//' +
-//         window.location.host + window.location.pathname + search;
-//
-// };
-//
-//
-// /**
-//  * 初始化页面语言。
-//  */
-// Ccbits.initLanguage = function () {
-//     //设置HTML语言和方向。
-//     var rtl = Ccbits.isRtl();
-//     document.dir = rtl ? 'rtl' : 'ltr';
-//     document.head.parentElement.setAttribute('lang', Ccbits.LANG);
-//
-//     // Sort languages alphabetically.
-//     var languages = [];
-//     for (var lang in Ccbits.LANGUAGE_NAME) {
-//         languages.push([Ccbits.LANGUAGE_NAME[lang], lang]);
-//     }
-//     var comp = function (a, b) {
-//         // Sort based on first argument ('English', 'Русский', '简体字', etc).
-//         if (a[0] > b[0]) return 1;
-//         if (a[0] < b[0]) return -1;
-//         return 0;
-//     };
-//     languages.sort(comp);
-//     // Populate the language selection menu.
-//     var languageMenu = document.getElementById('languageMenu');
-//     languageMenu.options.length = 0;
-//     for (var i = 0; i < languages.length; i++) {
-//         var tuple = languages[i];
-//         var lang = tuple[tuple.length - 1];
-//         var option = new Option(tuple[0], lang);
-//         if (lang == Ccbits.LANG) {
-//             option.selected = true;
-//         }
-//         languageMenu.options.add(option);
-//     }
-//     //添加语言改变事件
-//     languageMenu.addEventListener('change', Ccbits.changeLanguage, true);
-//     //读取块数据内容
-//     var categories = ['catInOut', 'catControl', 'catMath', 'catText', 'catLists',
-//         'catLogic', 'catSerialPort', 'catGroup', 'catStorage', 'catSensor', 'catActuator', 'catMonitor', 'catVar', 'catFun', 'catEthernet', 'catEthernet_init', 'catEthernet_clinet', 'catSense', 'catSense2', 'catLuxe'];
-//     for (var i = 0, cat; cat = categories[i]; i++) {
-//         if (document.getElementById(cat) != null) {
-//             document.getElementById(cat).setAttribute('name', MSG[cat]);
-//         }
-//     }
-//     //注入语言字符串.
-//     document.getElementById('copyright').textContent = MSG['copyright'];
-//     document.getElementById('viewMode1').textContent = MSG['viewNormal'];
-//     document.getElementById('viewMode2').textContent = MSG['viewAdvanced'];
-//
-//     var textVars = document.getElementsByClassName('textVar');
-//
-//     for (var i = 0, textVar; textVar = textVars[i]; i++) {
-//         textVar.textContent = MSG['textVariable'];
-//     }
-//     var listVars = document.getElementsByClassName('listVar');
-//     for (var i = 0, listVar; listVar = listVars[i]; i++) {
-//         listVar.textContent = MSG['listVariable'];
-//     }
-// };
-
-
+/**
+ * 高级视图
+ * @type {boolean}
+ */
 var sidecodeDisplay = false;
 /**
  * 点击侧边显示代码按钮
@@ -164,7 +22,7 @@ function sidecodeClick() {
 }
 
 /**
- * List of tab names.
+ *标签名称的列表。
  * @private
  */
 var TABS_ = ['blocks', 'arduino', 'xml'];
@@ -172,11 +30,11 @@ var TABS_ = ['blocks', 'arduino', 'xml'];
 var selected = 'blocks';
 
 /**
- * Switch the visible pane when a tab is clicked.
+ * 在单击选项卡时切换可见窗格。
  * @param {string} clickedName Name of tab clicked.
  */
 function tabClick(clickedName) {
-    // If the XML tab was open, save and render the content.
+    // 如果XML选项卡打开，则保存并呈现内容
     if (document.getElementById('tab_xml').className == 'tabon') {
         var xmlTextarea = document.getElementById('content_xml');
         var xmlText = xmlTextarea.value;
@@ -199,14 +57,14 @@ function tabClick(clickedName) {
     if (document.getElementById('tab_blocks').className == 'tabon') {
         Blockly.mainWorkspace.setVisible(false);
     }
-    // Deselect all tabs and hide all panes.
+    // 取消所有选项卡并隐藏所有窗格。
     for (var i = 0; i < TABS_.length; i++) {
         var name = TABS_[i];
         document.getElementById('tab_' + name).className = 'taboff';
         document.getElementById('content_' + name).style.visibility = 'hidden';
     }
 
-    // Select the active tab.
+    //选择活动选项卡。
     selected = clickedName;
     document.getElementById('tab_' + clickedName).className = 'tabon';
     // Show the selected pane.
@@ -239,13 +97,13 @@ function tabClick(clickedName) {
 }
 
 /**
- * Populate the currently selected pane with content generated from the blocks.
+ *用块生成的内容填充当前选中的面板。
  */
 function renderContent() {
     var content = document.getElementById('content_' + selected);
-    // Initialize the pane.
+    //初始化面板。
     if (content.id == 'content_blocks') {
-        // If the workspace was changed by the XML tab, Firefox will have performed
+        // 如果改变了工作空间的XML标签,Firefox将会执行
         // an incomplete rendering due to Blockly being invisible.  Rerender.
         Blockly.mainWorkspace.render();
         var arduinoTextarea = document.getElementById('side_code');
@@ -358,84 +216,37 @@ function init() {
         load_by_url(dest);
     }
 }
-//------------------------------------------------------------------
-// Ccbits.getBBox_=function(element) {
-//     var height = element.offsetHeight;
-//     var width = element.offsetWidth;
-//     var x = 0;
-//     var y = 0;
-//     do {
-//         x += element.offsetLeft;
-//         y += element.offsetTop;
-//         element = element.offsetParent;
-//     } while (element);
-//     return {
-//         height: height,
-//         width: width,
-//         x: x,
-//         y: y
-//     };
-// };
-//
-// Ccbits.init=function () {
-//     //获取容器对象
-//     var container = document.getElementById('content_area');
-//     var onresize = function (e) {
-//         var bBox = Ccbits.getBBox_(container);
-//         for (var i = 0; i < TABS_.length; i++) {
-//             var el = document.getElementById('content_' + TABS_[i]);
-//             el.style.top = bBox.y + 'px';
-//             el.style.left = bBox.x + 'px';
-//             el.style.height = bBox.height + 'px';
-//             el.style.height = (2 * bBox.height - el.offsetHeight) + 'px';
-//             el.style.width = bBox.width + 'px';
-//             el.style.width = (2 * bBox.width - el.offsetWidth) + 'px';
-//         }
-//         if (Blockly.mainWorkspace.toolbox_.width) {
-//             document.getElementById('tab_blocks').style.minWidth =
-//                 (Blockly.mainWorkspace.toolbox_.width - 38) + 'px';
-//         }
-//     };
-//     //窗口改变调用事件
-//     window.addEventListener('resize', onresize, false);
-//
-//     //读取数据块数据
-//     var toolbox = document.getElementById('toolbox');
-//     alert(document.getElementById('content_blocks'));
-//     var masterWorkspace = Blockly.inject(document.getElementById('content_blocks'),
-//     {
-//         media: 'blockly/media/',
-//         toolbox: toolbox,
-//         zoom:
-//             {
-//                 controls: true,
-//                 wheel: true
-//             }
-//     });
-//
-//    var rightCodeEvent= function(masterEvent) {
-//         if (masterEvent.type == Blockly.Events.UI) {
-//             return;  //不更新UI
-//         }
-//         //更新右边 arduino代码框内容
-//         var arduinoTextarea = document.getElementById('side_code');
-//         var code = Blockly.Arduino.workspaceToCode(Blockly.mainWorkspace) || '';
-//         arduinoTextarea.value = code.replace(/(_[0-9A-F]{2}_[0-9A-F]{2}_[0-9A-F]{2})+/g, function (s) {
-//             return decodeURIComponent(s.replace(/_/g, '%'));
-//         });
-//     };
-//     //右侧代码事件
-//     masterWorkspace.addChangeListener(rightCodeEvent);
-//     //自动保存与恢复块数据
-//     auto_save_and_restore_blocks();
-//     //加载本地参数
-//     var dest = unescape(location.search.replace(/^.*\=/, '')).replace(/\+/g, " ");
-//     if (dest) {
-//         load_by_url(dest);
-//     }
-// };
+
+//------------------------------------代码保存
+document.querySelector("#savecode").addEventListener("click",function () {
+    //获取代码Blockly.Arduino.workspaceToCode(Blockly.mainWorkspace)
+    var code=Blockly.Arduino.workspaceToCode(Blockly.mainWorkspace);
+    window.localStorage.setItem("code",code);
+});
+
+//判断操作系统
+function isOs(){
+    var UserAgent = navigator.userAgent.toLowerCase();
+    return {
+        isIpad          : /ipad/.test(UserAgent),
+        isIphone        : /iphone os/.test(UserAgent),
+        isAndroid       : /android/.test(UserAgent),
+        isWindowsCe     : /windows ce/.test(UserAgent),
+        isWindowsMobile : /windows mobile/.test(UserAgent),
+        isWin2K         : /windows nt 5.0/.test(UserAgent),
+        isXP            : /windows nt 5.1/.test(UserAgent),
+        isVista         : /windows nt 6.0/.test(UserAgent),
+        isWin7          : /windows nt 6.1/.test(UserAgent),
+        isWin8          : /windows nt 6.2/.test(UserAgent),
+        isWin81         : /windows nt 6.3/.test(UserAgent),
+        isMac           : /mac os/.test(UserAgent)
+    };
+}
+
 
 //---------------------------------加载语言模块
+var viewMode1 = document.getElementById('viewMode1');
+viewMode1.href = 'index_simple.html?lang=' + Code.LANG;
 document.getElementById('span_blocks').textContent = MSG['tab_blocks'];
 document.getElementById('span_arduino').textContent = MSG['tab_arduino'];
 

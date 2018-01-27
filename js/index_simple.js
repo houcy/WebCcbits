@@ -25,7 +25,7 @@ var TABS_ = ['blocks', 'arduino', 'xml'];
 var selected = 'blocks';
 
 /**
- * Switch the visible pane when a tab is clicked.
+ * 在单击选项卡时切换可见窗格。
  * @param {string} clickedName Name of tab clicked.
  */
 function tabClick(clickedName) {
@@ -92,7 +92,7 @@ function tabClick(clickedName) {
 }
 
 /**
- * Populate the currently selected pane with content generated from the blocks.
+ * 用块生成的内容填充当前选中的面板。
  */
 function renderContent() {
     var content = document.getElementById('content_' + selected);
@@ -119,7 +119,7 @@ function renderContent() {
 }
 
 /**
- * Compute the absolute coordinates and dimensions of an HTML element.
+ * 计算一个HTML元素的绝对坐标和维数。
  * @param {!Element} element Element to match.
  * @return {!Object} Contains height, width, x, and y properties.
  * @private
@@ -143,7 +143,7 @@ function getBBox_(element) {
 }
 
 /**
- * Initialize Blockly.  Called on page load.
+ * 初始化块。要求页面加载。
  */
 function init() {
     //window.onbeforeunload = function() {

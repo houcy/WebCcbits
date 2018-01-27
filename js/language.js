@@ -65,8 +65,8 @@ Language.isRtl = function () {
  * 语言改变事件
  */
 Language.changeLanguage = function () {
-    // Store the blocks for the duration of the reload.
-    // This should be skipped for the index page, which has no blocks and does
+    // 重载的持续时间的存储块。
+    // 这应该是跳过的索引页,并没有块
     // not load Blockly.
     // MSIE 11 does not support sessionStorage on file:// URLs.
     if (typeof Blockly != 'undefined' && window.sessionStorage) {

@@ -1,48 +1,48 @@
 /**
- * @fileoverview JavaScript for Blockly's Code demo.
+ * @fileoverview JavaScript代码块.
  * @author fraser@google.com (Neil Fraser)
  */
 'use strict';
 
 /**
- * Create a namespace for the application.
+ * 为应用程序创建一个名称空间。
  */
 var Code = {};
 
 /**
- * Load blocks saved on App Engine Storage or in session/local storage.
+ * 加载模块保存在App Engine存储或会话/本地存储。
  * @param {string} defaultXml Text representation of default blocks.
  */
 Code.loadBlocks = function (defaultXml) {
     try {
         var loadOnce = window.sessionStorage.loadOnceBlocks;
     } catch (e) {
-        // Firefox sometimes throws a SecurityError when accessing sessionStorage.
-        // Restarting Firefox fixes this, so it looks like a bug.
+        // Firefox sessionStorage有时会抛出一个SecurityError当访问。
+        // 重新启动Firefox修复这个,所以它看起来像一个bug。
         var loadOnce = null;
     }
     if ('BlocklyStorage' in window && window.location.hash.length > 1) {
         // An href with #key trigers an AJAX call to retrieve saved blocks.
         BlocklyStorage.retrieveXml(window.location.hash.substring(1));
     } else if (loadOnce) {
-        // Language switching stores the blocks during the reload.
+        //语言切换存储块在重载。
         delete window.sessionStorage.loadOnceBlocks;
         var xml = Blockly.Xml.textToDom(loadOnce);
         Blockly.Xml.domToWorkspace(xml, Code.workspace);
     } else if (defaultXml) {
-        // Load the editor with default starting blocks.
+        //加载编辑默认的起点。
         var xml = Blockly.Xml.textToDom(defaultXml);
         Blockly.Xml.domToWorkspace(xml, Code.workspace);
     } else if ('BlocklyStorage' in window) {
-        // Restore saved blocks in a separate thread so that subsequent
-        // initialization is not affected from a failed load.
+        // 恢复保存在一个单独的线程,以便后续
+        // 初始化失败的负载不受影响。
         window.setTimeout(BlocklyStorage.restoreBlocks, 0);
     }
 };
 
 /**
- * Bind a function to a button's click event.
- * On touch enabled browsers, ontouchend is treated as equivalent to onclick.
+ * 将函数绑定到一个按钮的单击事件。
+ * 在触摸启用浏览器,ontouchend被视为等同于onclick。
  * @param {!Element|string} el Button element or ID thereof.
  * @param {!Function} func Event handler to bind.
  */
@@ -55,23 +55,24 @@ Code.bindClick = function (el, func) {
 };
 
 /**
- * Load the Prettify CSS and JavaScript.
+ * 用于美化页面
+ * 加载 prettify CSS 与 JavaScript.
  */
 Code.importPrettify = function () {
     //<link rel="stylesheet" href="../prettify.css">
     //<script src="../prettify.js"></script>
     var link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', '../prettify.css');
+    link.setAttribute('href', 'style/prettify.css');
     document.head.appendChild(link);
     var script = document.createElement('script');
-    script.setAttribute('src', '../prettify.js');
+    script.setAttribute('src', 'js/prettify.js');
     document.head.appendChild(script);
 };
 
 
 /**
- * List of tab names.
+ * 标签名称的列表。
  * @private
  */
 Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'lua', 'xml'];
@@ -79,7 +80,7 @@ Code.TABS_ = ['blocks', 'javascript', 'php', 'python', 'dart', 'lua', 'xml'];
 Code.selected = 'blocks';
 
 /**
- * Switch the visible pane when a tab is clicked.
+ * 当单击选项卡切换可见窗格。
  * @param {string} clickedName Name of tab clicked.
  */
 Code.tabClick = function (clickedName) {
